@@ -236,8 +236,15 @@ Trie.prototype.exec = function(text, cb) {
     }
 
     var node = this.root.get(c);
-    if (node)
-      drafts[c] = node;
+    if (node){
+        drafts[c] = node;
+    }else if(node==DEAD_END){
+        if (this.ensureBoundary(text, currentWord, i)) {
+            if (cb(currentWord, i) === false)
+                return;
+        }
+    }
+
   }
 };
 
