@@ -236,11 +236,11 @@ Trie.prototype.exec = function(text, cb) {
     }
 
     var node = this.root.get(c);
-    if (node){
+    if (node && !node.get(OPEN_END)){
         drafts[c] = node;
-    }else if(node==DEAD_END){
-        if (this.ensureBoundary(text, currentWord, i)) {
-            if (cb(currentWord, i) === false)
+    }else if(node==DEAD_END || (node &&  node.get(OPEN_END))){
+        if (this.ensureBoundary(text, c, i)) {
+            if (cb(c, i) === false)
                 return;
         }
     }
